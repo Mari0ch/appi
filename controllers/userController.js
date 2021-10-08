@@ -1,35 +1,26 @@
-const{userController} = require ('express');
-const userController = userController();
+// Controladores de archivo
+const Videojuegos = require('../models/userModel');
 
-var moongose = require("moongose");
-var Videojuegos = moongose.model("videojuegos");
+// Recoger todos los tipos de juegos (GET)
+function findByIdgame(req, response) {
+  Videojuegos.findById(req.params.id, (err, vgame) => {
+    if (err) return response.status.send(400, err.message);
+    return response.status(200).send(vgame);
+  });
+}
 
-//GET videojuegos
-exports.findAllvideojuegos = function(req,res){
-    Videojuegos.find(function(err,videojuegos){
-        if (err) res.send(400,err.message);
+// Ahora añadimos nuevos objetos(POST)
+function addvideojuego(req, response) {
+  // creamos los objetos añadiendo sus datos y tipo
+  const nuevoJuego = new Videojuegos(req.body);
+  // guardamos nuestros nuevos objetos
+  nuevoJuego.save((err, newJuego) => {
+    if (err) return response.status(400).send(err.message);
+    return response.status(200).send(newJuego);
+  });
+}
 
-        console.log('GET/videojuegos/'+ req.params.id);
-        res.status(200).jsonp(videojuegos);
-    });
-};
-//POST
-exports.addvideojuegos = function(req, res){
-console.log("POST");
-console.log(req.body);
-
-//Añadir nuevos juegos
-var videojuegos = new videojuegos({
-    title: req.body.title;
-    year: req.body.year;
-    genre: req.body.genre;
-});
-videojuegos.save(function (err, videojuegos){
-    if (err) return.status(400).send(err.message);
-    res.status(200).jsonp(videojuegos);
-});
-exports.sendvideojuegos = function (req,res){
-    Videojuegos.find(function(videojuegos);
-    res.send('Videojuegos');
-});
+module.exports = {
+  findByIdgame,
+  addvideojuego,
 };

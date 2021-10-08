@@ -1,14 +1,11 @@
-var mongoose = require('mongoose');
-Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-//Estoy declarando tipo de videojuegos, año y fecha 
-var videojuegosSchema = new Schema({
-    title: {tyoe: String};
-    year: {type: Number};
-    genre: {
-        type: String;
-        enum: ["Accion","Aventuras","PVP"]
-    };
+const { Schema } = mongoose;
+
+// Estoy declarando tipo de videojuegos, año y fecha
+const videojuegosSchema = new Schema({
+  title: { type: String },
+  year: { type: Date },
 });
 
-module.exports = mongoose.moder('Videojuegos',videojuegosSchema);
+module.exports = mongoose.model('Videojuegos', videojuegosSchema);

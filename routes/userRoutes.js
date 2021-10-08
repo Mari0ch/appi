@@ -1,10 +1,9 @@
-const {userRutes} = require ('express');
-const userRutes = userRutes();
+const { Router } = require('express');
+const userController = require('../controllers/userController');
 
-const controller =require('../controllers/userController');
+const router = Router();
 
-userRutes.get(
+router.get('/:id', userController.findByIdgame);
+router.post('/', userController.addvideojuego);
 
-)
-
-module.exports = routes 
+module.exports = router;
